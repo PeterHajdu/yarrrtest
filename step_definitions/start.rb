@@ -14,13 +14,13 @@ When(/^I wait a bit$/) do
 end
 
 When(/^I start the client executable with command line parameters (.*)$/) do | parameter |
-  @tmp_home = `mktemp -d`
-  @tmp_home.chomp!
-  p "Using temporary home folder: #{ @tmp_home }"
+  @client_home = `mktemp -d`
+  @client_home.chomp!
+  p "Using temporary home folder: #{ @client_home }"
   @yarrr_client = ProcessRunner.new(
     {
       "SDL_VIDEODRIVER" => "dummy",
-      "HOME" => @tmp_home
+      "HOME" => @client_home
     },
     "yarrrclient #{parameter}" )
   @yarrr_client.start
@@ -116,5 +116,10 @@ end
 
 Then(/^the server should not be running$/) do
   expect( @yarrr_server.is_running ).to be false
+end
+
+Given(/^a connected client with name (.*)$/) do | username |
+  step "a running server"
+  step "I start a client with command line parameter --username #{ username }"
 end
 
