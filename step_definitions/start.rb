@@ -36,6 +36,30 @@ Then(/^the help message should be on the screen$/) do
   }
 end
 
+When(/^I stop the client$/) do
+  @yarrr_client.kill
+  sleep 1.0
+end
+
+Given(/^a running client without authentication token$/) do
+  step "I start a client"
+end
+
+Then(/^the client should not be running$/) do
+  expect( @yarrr_client.is_running ).to be false
+end
+
+When(/^I start (\d+) clients$/) do | number_of_clients |
+  @yarrr_clients = []
+  next_name = 1
+  number_of_clients.to_i.times do
+    step "I start a client with command line parameters --username #{ next_name }"
+    @yarrr_clients << @yarrr_client
+    next_name += 1
+  end
+end
+
+
 Then(/^I should see (.+)$/) do | pattern |
   expect( @yarrr_client.output ).to match( /#{pattern}/ )
 end
@@ -46,5 +70,36 @@ end
 
 Then(/^the client should be running$/) do
   expect( @yarrr_client.is_running ).to be true
+end
+
+DEFAULT_PORT = 21346
+
+When(/^I start the server with command line parameter (.*)$/) do | parameter |
+  @yarrr_server = ProcessRunner.new(
+    {},
+    "yarrrserver #{parameter}" )
+  @yarrr_server.start
+end
+
+When(/^I start the server with a port and command line parameter (.*)$/) do | parameter |
+  step "I start the server with command line parameter --port 21345 #{ parameter }"
+end
+
+When(/^I start the server without any command line parameter$/) do
+  step "I start the server with command line parameter "
+end
+
+Given(/^a running server$/) do
+  @server_port = DEFAULT_PORT
+  @remote_model_endpoint = "tcp://127.0.0.1:32199"
+  step "I start the server with command line parameter --remote-model-endpoint #{@remote_model_endpoint} -port #{@server_port}"
+end
+
+Then(/^the server should be running$/) do
+  expect( @yarrr_server.is_running ).to be true
+end
+
+Then(/^the server should not be running$/) do
+  expect( @yarrr_server.is_running ).to be false
 end
 
