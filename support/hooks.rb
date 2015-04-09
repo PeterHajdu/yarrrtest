@@ -8,7 +8,7 @@ Before do
 end
 
 After do
-  @yarrr_server.kill
+  @yarrr_server.kill if not @yarrr_server.nil?
   @yarrr_client.kill if not @yarrr_client.nil?
 
   if not @yarrr_clients.nil? then
