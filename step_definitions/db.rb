@@ -21,3 +21,13 @@ Then(/^the default users auth_token should be (.*)$/) do | expected_auth_token |
   expect( auth_token_in_db ).to eq expected_auth_token
 end
 
+Then(/^permanent configuration file "(.*?)" should contain authentication token of user "(.*?)"$/) do | filename , username |
+  auth_token_in_db = @db.hget( "user:#{username}", "auth_token" )
+  auth_token_in_file = ""
+  File.open( full_path_of_permanent_file( filename ) , "r" ) do | tokenfile |
+    auth_token_in_file = tokenfile.gets
+  end
+
+  expect( auth_token_in_db ).to eq auth_token_in_file
+end
+

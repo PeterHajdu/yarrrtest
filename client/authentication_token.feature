@@ -4,7 +4,7 @@ Feature: Saves authentication token to the home folder
   As a yarrr player
   I should be able to start the client without specifying the token in the command line
 
-  Scenario: Client creates home folder if it does not exist.
+  Scenario: The saved authentication token is the same as in the database
     Given a connected client with name hablabla
-    Then permanent client configuration file should exist with name hablabla.token
+    Then permanent configuration file "hablabla.token" should contain authentication token of user "hablabla"
 
