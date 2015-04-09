@@ -9,20 +9,19 @@ When(/^I start a client with command line parameters (.*)$/) do | parameter |
     },
     "yarrrclient #{parameter}" )
   @yarrr_client.start
-  sleep 1.0
-  expect( @yarrr_client.is_running ).to be true
 end
 
 When(/^I start a client with command line parameter (.*)$/) do | parameter |
+  @server_port||="9871"
   step "I start a client with command line parameters --server localhost:#{@server_port} --text #{parameter}"
 end
 
 Given(/^a running client$/) do
-  step "I start a client with command line parameter"
+  step "I start a client with command line parameter "
 end
 
 When(/^I start a client$/) do
-  step "I start a client with command line parameter"
+  step "I start a client with command line parameter "
 end
 
 Then(/^the help message should be on the screen$/) do

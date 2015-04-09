@@ -6,7 +6,7 @@ Feature: Specify loglevel with command line parameter
   I should be able to specify the loglevel
 
   Scenario: specify with command line parameter
-    When I start yarrr with a server and command line parameter --loglevel 0
+    When I start a client with command line parameter --loglevel 0
     Then the client should be running
     And I should see Loglevel is set to 0
 

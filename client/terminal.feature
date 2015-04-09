@@ -5,6 +5,6 @@ Feature: Print out meaningful information to the terminal
   I should be able to see meaningful information in the terminal
 
   Scenario: starting with --help parameter
-    When I start yarrr with command line parameter --help
+    When I start a client with command line parameter --help
     Then the help message should be on the screen
 
