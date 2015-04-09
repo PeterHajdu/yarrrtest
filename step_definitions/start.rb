@@ -13,9 +13,17 @@ When(/^I wait a bit$/) do
   sleep 1
 end
 
-When(/^I start the client executable with command line parameters (.*)$/) do | parameter |
+def create_home_folder_if_needed
+  if not @client_home.nil? then
+    return
+  end
+
   @client_home = `mktemp -d`
   @client_home.chomp!
+end
+
+When(/^I start the client executable with command line parameters (.*)$/) do | parameter |
+  create_home_folder_if_needed
   p "Using temporary home folder: #{ @client_home }"
   @yarrr_client = ProcessRunner.new(
     {

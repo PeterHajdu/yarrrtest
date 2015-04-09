@@ -8,3 +8,10 @@ Feature: Saves authentication token to the home folder
     Given a connected client with name hablabla
     Then permanent configuration file "hablabla.token" should contain authentication token of user "hablabla"
 
+  Scenario: The client uses the saved authentication tokens to log in
+    Given a connected client with name hablabla
+    When I stop the client
+    And I start a client with command line parameter --username hablabla
+    And I gather model information
+    Then a player with name "hablabla" should be online
+
