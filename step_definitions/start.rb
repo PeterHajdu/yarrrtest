@@ -1,4 +1,4 @@
-When(/^I plain start yarrr with command line parameter (.*)$/) do | parameter |
+When(/^I start a client with command line parameters (.*)$/) do | parameter |
   @tmp_home = `mktemp -d`
   @tmp_home.chomp!
   p "Using temporary home folder: #{ @tmp_home }"
@@ -9,22 +9,20 @@ When(/^I plain start yarrr with command line parameter (.*)$/) do | parameter |
     },
     "yarrrclient #{parameter}" )
   @yarrr_client.start
+  sleep 1.0
+  expect( @yarrr_client.is_running ).to be true
 end
 
-When(/^I start yarrr with command line parameter (.*)$/) do | parameter |
-  step "I plain start yarrr with command line parameter --text #{parameter}"
-end
-
-When(/^I start yarrr with a server and command line parameter (.*)$/) do | parameter |
-  step "I plain start yarrr with command line parameter --server not.existing.domain:2001 --text #{parameter}"
+When(/^I start a client with command line parameter (.*)$/) do | parameter |
+  step "I start a client with command line parameters --server localhost:#{@server_port} --text #{parameter}"
 end
 
 Given(/^a running client$/) do
-  step "I plain start yarrr with command line parameter --server not.existing.domain:2001 --text"
+  step "I start a client with command line parameter"
 end
 
 When(/^I start a client$/) do
-  step "I plain start yarrr with command line parameter --server not.existing.domain:2001 --text"
+  step "I start a client with command line parameter"
 end
 
 Then(/^the help message should be on the screen$/) do
