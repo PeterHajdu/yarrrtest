@@ -12,5 +12,5 @@ Feature: Specify port number from the command line
   Scenario: prints out usage when starting without the port parameter
     When I start the server without any command line parameter
     Then the server should not be running
-    And It should print the usage text to the terminal
+    And I should see yarrrserver --port
 

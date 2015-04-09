@@ -1,4 +1,19 @@
-When(/^I start a client with command line parameters (.*)$/) do | parameter |
+def combined_output
+  combined_output = ""
+  combined_output << @yarrr_client.output if not @yarrr_client.nil?
+  combined_output << @yarrr_server.output if not @yarrr_server.nil?
+  return combined_output
+end
+
+When(/^I wait a lot$/) do
+  sleep 60
+end
+
+When(/^I wait a bit$/) do
+  sleep 1
+end
+
+When(/^I start the client executable with command line parameters (.*)$/) do | parameter |
   @tmp_home = `mktemp -d`
   @tmp_home.chomp!
   p "Using temporary home folder: #{ @tmp_home }"
@@ -13,7 +28,7 @@ end
 
 When(/^I start a client with command line parameter (.*)$/) do | parameter |
   @server_port||="9871"
-  step "I start a client with command line parameters --server localhost:#{@server_port} --text #{parameter}"
+  step "I start the client executable with command line parameters --server localhost:#{@server_port} --text #{parameter}"
 end
 
 Given(/^a running client$/) do
@@ -53,7 +68,7 @@ When(/^I start (\d+) clients$/) do | number_of_clients |
   @yarrr_clients = []
   next_name = 1
   number_of_clients.to_i.times do
-    step "I start a client with command line parameters --username #{ next_name }"
+    step "I start a client with command line parameter --username #{ next_name }"
     @yarrr_clients << @yarrr_client
     next_name += 1
   end
@@ -61,11 +76,11 @@ end
 
 
 Then(/^I should see (.+)$/) do | pattern |
-  expect( @yarrr_client.output ).to match( /#{pattern}/ )
+  expect( combined_output ).to match( /#{pattern}/ )
 end
 
 Then(/^I should not see (.+)$/) do | pattern |
-  expect(  @yarrr_client.output ).not_to match( /#{pattern}/ )
+  expect( combined_output ).not_to match( /#{pattern}/ )
 end
 
 Then(/^the client should be running$/) do
