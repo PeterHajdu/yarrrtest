@@ -87,6 +87,10 @@ Then(/^I should see (.+)$/) do | pattern |
   expect( combined_output ).to match( /#{pattern}/ )
 end
 
+Then(/^the client should see "(.*?)"$/) do | pattern |
+  expect( @yarrr_client.output ).to match( /#{pattern}/ )
+end
+
 Then(/^I should not see (.+)$/) do | pattern |
   expect( combined_output ).not_to match( /#{pattern}/ )
 end

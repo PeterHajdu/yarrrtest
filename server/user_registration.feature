@@ -19,3 +19,4 @@ Feature: User registration
     And a registered default user with auth_token appletree
     And a running client without authentication token
     Then the default users auth_token should be appletree
+    And the client should see "Unable to log in.  Please restart the client with the --username command line parameter.  If you are unable to solve the issue send an email to info@yarrrthegame.com"
