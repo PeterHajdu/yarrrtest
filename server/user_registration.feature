@@ -20,3 +20,11 @@ Feature: User registration
     And a running client without authentication token
     Then the default users auth_token should be appletree
     And the client should see "Unable to log in.  Please restart the client with the --username command line parameter.  If you are unable to solve the issue send an email to info@yarrrthegame.com"
+
+  @wip
+  Scenario: The server handles well invalid username requests
+    Given a running server
+    When I start a client with command line parameter --username "Kilgore Trout"
+    Then the server should be running
+    And the client should see "Unable to log in.  Username must not contain the following characters: space"
+
