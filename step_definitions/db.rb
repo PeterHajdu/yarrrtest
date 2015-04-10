@@ -2,6 +2,7 @@ DEFAULT_USERNAME=ENV[ "LOGNAME" ]
 
 Then(/^the default user should be created in the database$/) do
   expect( @db.exists( "user:#{ DEFAULT_USERNAME }" ) ).to be true
+  expect( @db.sismember( "users", DEFAULT_USERNAME ) ).to be true
 end
 
 Then(/^the default user should have (.*)$/) do | hash_field |
