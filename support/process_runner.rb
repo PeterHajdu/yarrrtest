@@ -1,5 +1,3 @@
-KILL_SIGNAL = 9
-
 class ProcessRunner
   attr_reader :command
   attr_reader :output
@@ -21,7 +19,13 @@ class ProcessRunner
 
   def kill()
     return if not is_running
-    Process.kill( KILL_SIGNAL, @pid )
+
+    begin
+      Process.kill( 9, @pid )
+    rescue Exception => e
+      puts "EXCEPTION: #{e.inspect}"
+      puts "MESSAGE: #{e.message}"
+    end
   end
 
   private
