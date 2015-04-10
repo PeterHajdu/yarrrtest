@@ -26,5 +26,5 @@ Feature: User registration
     Given a running server
     When I start a client with command line parameter --username "Kilgore Trout"
     Then the server should be running
-    And the client should see "Unable to log in.  Username must not contain the following characters: space"
+    And the client should see "Invalid username.  Username must not contain the following characters: space"
 
