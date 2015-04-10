@@ -1,3 +1,12 @@
+def split_up_command_line_parameters( command )
+  tokens = []
+  command.scan( /(?:([a-zA-Z_0-9\.\-\:\/]+)|"((?:\\.|[^\\"])*)")/ ).map do | word, phrase |
+    tokens << word unless word.nil?
+    tokens << phrase unless phrase.nil?
+  end
+  return tokens
+end
+
 class ProcessRunner
   attr_reader :command
   attr_reader :output
@@ -5,7 +14,7 @@ class ProcessRunner
 
   def initialize( env, command )
     @env = env
-    @command = command.split
+    @command = split_up_command_line_parameters( command )
     @output = ""
     @is_running = false
   end

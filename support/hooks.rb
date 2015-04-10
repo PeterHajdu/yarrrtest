@@ -1,8 +1,6 @@
 require 'redis'
 
 Before do
-  @notification_file_path = "./notifications"
-  @notification_file = File.open( @notification_file_path, "w+" )
   @db = Redis.new
   @db.flushdb
 end
