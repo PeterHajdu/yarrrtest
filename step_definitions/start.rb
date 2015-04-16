@@ -104,7 +104,7 @@ DEFAULT_PORT = 21346
 When(/^I start the server with command line parameter (.*)$/) do | parameter |
   @yarrr_server = ProcessRunner.new(
     {},
-    "yarrrserver #{parameter}" )
+    "yarrrserver --redis_url 127.0.0.1:#{REDIS_PORT} #{parameter}" )
   @yarrr_server.start
 end
 

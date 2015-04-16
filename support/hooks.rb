@@ -1,7 +1,7 @@
 require 'redis'
 
 Before do
-  @db = Redis.new
+  @db = Redis.new( :port => REDIS_PORT )
   @db.flushdb
 end
 
