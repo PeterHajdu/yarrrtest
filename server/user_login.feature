@@ -16,6 +16,7 @@ Feature: User login
     When I start a client with command line parameter --username unknown_user --auth_token dogfood
     And I gather model information
     Then a player with name "unknown_user" should not be online
+    And I wait a bit
     And the client should see "Unable to log in.  Please restart the client with the --username command line parameter.  If you are unable to solve the issue send an email to info@yarrrthegame.com"
 
   Scenario: The server does not allow existing user login without the correct authentication token.
@@ -24,5 +25,6 @@ Feature: User login
     When I start a client with command line parameter --username known_user --auth_token catbeverage
     And I gather model information
     Then a player with name "known_user" should not be online
+    And I wait a bit
     And the client should see "Unable to log in.  Please restart the client with the --username command line parameter.  If you are unable to solve the issue send an email to info@yarrrthegame.com"
 
